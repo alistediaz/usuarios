@@ -6,12 +6,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.mario.usuarios.domain.Usuario;
+import com.mario.usuarios.model.Usuario;
 import com.mario.usuarios.repository.UsuarioRepository;
 
 @Service
 public class UsuarioDetailsServiceImpl implements UserDetailsService {
-
+	
     private final UsuarioRepository usuarioRepository;
 
     @Autowired

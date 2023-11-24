@@ -1,6 +1,6 @@
 package com.mario.usuarios.service;
 
-import com.mario.usuarios.domain.Usuario;
+import com.mario.usuarios.model.Usuario;
 
 public class UsuarioService {
 

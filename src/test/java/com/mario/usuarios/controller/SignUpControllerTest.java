@@ -2,10 +2,7 @@ package com.mario.usuarios.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +26,7 @@ import com.mario.usuarios.service.UsuarioService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LoginControllerTest {
+public class SignUpControllerTest {
 	@Autowired
     private MockMvc mockMvc;
 
@@ -37,19 +34,24 @@ public class LoginControllerTest {
     private UsuarioService usuarioService;
 
     @InjectMocks
-    private LoginController loginController;
+    private SignUpController signUpController;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(signUpController).build();
     }
 
     @Test
-    public void testLoginSuccess() throws Exception {
-        when(usuarioService.getUser(any(Long.class))).thenReturn(new Usuario("Juan Perez", "juan.perez@example.com", "securePassword", null));
-        
-        mockMvc.perform(get(""))
-                .andExpect(status().isOk())
+    public void testCreateUser() throws Exception {
+        Usuario newUsuario = new Usuario("Juan Perez", "juan.perez@example.com", "securePassword", null);
+        when(usuarioService.createUser(any(Usuario.class))).thenReturn(newUsuario);
+
+        mockMvc.perform(post("/sign-up")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newUsuario)))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Juan Perez"))
                 .andExpect(jsonPath("$.email").value("juan.perez@example.com"));
     }

@@ -3,7 +3,7 @@ package com.mario.usuarios.service;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.mario.usuarios.domain.Usuario;
+import com.mario.usuarios.model.Usuario;
 
 import java.util.Collection;
 
