@@ -14,18 +14,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mario.usuarios.utils.JwtTokenFilter;
+import com.mario.usuarios.utils.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
-    private final JwtTokenFilter jwtTokenFilter;
+    private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService, JwtTokenFilter jwtTokenFilter) {
+    public SecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtTokenFilter) {
         this.userDetailsService = userDetailsService;
-        this.jwtTokenFilter = jwtTokenFilter;
+        this.jwtRequestFilter = jwtTokenFilter;
     }
 
     @Bean
@@ -43,9 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
         	.csrf()
         	.disable()
+        	.authorizeRequests().antMatchers("/actuator/**", "/sign-up/**", "/h2-console/**").permitAll()
+        	.and()
         	.authorizeRequests()
-        	.antMatchers("/login/*")
-        	.permitAll()
         	.anyRequest()
         	.authenticated()
         	.and()
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.sessionManagement()
         	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         	.and()
-        	.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        	.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
    /* @Bean
