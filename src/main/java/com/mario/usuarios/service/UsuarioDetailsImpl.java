@@ -63,4 +63,8 @@ public class UsuarioDetailsImpl implements UserDetails {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Long getId() {
+		return id;
+	}
 }

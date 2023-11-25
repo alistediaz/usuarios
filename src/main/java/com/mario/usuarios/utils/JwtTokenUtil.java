@@ -1,12 +1,14 @@
 package com.mario.usuarios.utils;
 
+import java.io.Serializable;
+import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mario.usuarios.model.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,32 +17,55 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.jackson.io.JacksonDeserializer;
-import io.jsonwebtoken.jackson.io.JacksonSerializer;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
 @Component
-public class JwtTokenUtil {
+public class JwtTokenUtil implements Serializable {
 
-    private final JwtProperties jwtProperties = new JwtProperties(Keys.secretKeyFor(SignatureAlgorithm.HS256));
+	private static final long serialVersionUID = 1L;
 
-    public String generateAccessToken(Usuario usuario) {
-    	final ObjectMapper objectMapper = new ObjectMapper();
-    	
-        return Jwts.builder()
-        		.serializeToJsonWith(new JacksonSerializer<Map<String, ?>>(objectMapper))
-        		.claim("user", usuario)
-        		.setIssuedAt(new Date())
-        		.signWith(jwtProperties.getSecret())
-        		.setExpiration(new Date(System.currentTimeMillis()
-                        + jwtProperties.getExpireMinutes()))
+	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+
+    Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    public String getUsernameFromToken(String token) {
+        return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    public Date getExpirationDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getExpiration);
+    }
+
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+
+    public Boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return Jwts
+        		.builder()
+        		.setClaims(claims)
+        		.setSubject(userDetails.getUsername())
+        		.setIssuedAt(new Date(System.currentTimeMillis()))
+        		.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1))
+        		.signWith(key)
         		.compact();
     }
 
     public boolean validate(String token) {
         try {
-			Jwts.parserBuilder().setSigningKey(jwtProperties.getSecret()).build().parseClaimsJws(token);
+			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
         	return true;
         } catch (SignatureException ex) {
             throw new JwtException(ex.getMessage());
@@ -54,16 +79,4 @@ public class JwtTokenUtil {
         	throw new JwtException(ex.getMessage());
         }
     }
-
-    public Usuario getUser(String token) {
-		return Jwts.parserBuilder()
-				.deserializeJsonWith(new JacksonDeserializer<Map<String, ?>>())
-				.setSigningKey(jwtProperties.getSecret()).build().parseClaimsJws(token).getBody()
-				.get("user", Usuario.class);
-	}
-
-    public Date getExpirationDate(Claims claims) {
-        return claims.getExpiration();
-    }
-
 }

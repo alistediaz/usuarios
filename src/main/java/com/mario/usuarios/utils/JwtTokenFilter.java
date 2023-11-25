@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.mario.usuarios.repository.UsuarioRepository;
 
-import io.jsonwebtoken.io.IOException;
+import io.jsonwebtoken.JwtException;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -34,36 +34,23 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain chain)
-            throws ServletException, IOException {
+                                    FilterChain chain) throws java.io.IOException, ServletException
+           {
 
     	final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
     	
-        if (header.isEmpty() || !header.startsWith("Bearer ")) {
-            try {
-				chain.doFilter(request, response);
-			} catch (java.io.IOException | ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            return;
+        if (header == null || header.isEmpty() || !header.startsWith("Bearer ")) {
+        	throw new JwtException("Token is not available.");
         }
 
         final String token = header.split(" ")[1].trim();
         
         if (!jwtTokenUtil.validate(token)) {
-            try {
-				chain.doFilter(request, response);
-			} catch (java.io.IOException | ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            return;
+        	throw new JwtException("Token is not valid.");
         }
 
-        // Get user identity and set it on the spring security context
         UserDetails userDetails = (UserDetails) usuarioRepository
-            .findByUsername(jwtTokenUtil.getUser(token).getUsername())
+            .findByUsername(jwtTokenUtil.getUsernameFromToken(token))
             .orElse(null);
 
         UsernamePasswordAuthenticationToken
@@ -78,12 +65,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        try {
-			chain.doFilter(request, response);
-		} catch (java.io.IOException | ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        
+		chain.doFilter(request, response);
+		
     }
 
 }
