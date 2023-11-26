@@ -16,16 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
 @AutoConfigureWebTestClient
 class LoginControllerTest {
 	@Autowired
     WebTestClient webTestClient;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
-	/*@Autowired
-    private MockMvc mockMvc;
-*/
+
     @Mock
     private UsuarioService usuarioService;
 
@@ -42,14 +39,14 @@ class LoginControllerTest {
     }
     
     @Test
-    public void testLoginWithToken() throws Exception {
+    public void testLoginUsuarioNoExiste() throws Exception {
     	String tokenString = jwtTokenUtil.generateToken(
                 new UsuarioDetailsImpl(1L, "test-user", "P4ssword"));
     	webTestClient
 	        .get().uri("/login")
 	        .headers(http -> http.setBearerAuth(tokenString))
 	        .exchange()
-	        .expectStatus().isOk();
+	        .expectStatus().isUnauthorized();
     }
     
     @Test
