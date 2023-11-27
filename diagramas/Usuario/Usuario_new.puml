@@ -1,0 +1,7 @@
+@startuml
+participant Actor
+create Usuario
+Actor -> Usuario : new
+activate Usuario
+return
+@enduml

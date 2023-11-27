@@ -1,0 +1,42 @@
+@startuml
+participant Actor
+Actor -> LoginController : login
+activate LoginController
+LoginController -> UsuarioRepository : findByName
+activate UsuarioRepository
+UsuarioRepository --> LoginController
+deactivate UsuarioRepository
+create ErrorStruct
+LoginController -> ErrorStruct : new
+activate ErrorStruct
+ErrorStruct --> LoginController
+deactivate ErrorStruct
+create ValidacionException
+LoginController -> ValidacionException : new
+activate ValidacionException
+ValidacionException --> LoginController
+deactivate ValidacionException
+LoginController -> UsuarioDetailsImpl : build
+activate UsuarioDetailsImpl
+create UsuarioDetailsImpl
+UsuarioDetailsImpl -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsImpl --> LoginController
+deactivate UsuarioDetailsImpl
+LoginController -> JwtTokenUtil : generateToken
+activate JwtTokenUtil
+JwtTokenUtil --> LoginController
+deactivate JwtTokenUtil
+LoginController -> ResponseLogin : build
+activate ResponseLogin
+create ResponseLogin
+ResponseLogin -> ResponseLogin : new
+activate ResponseLogin
+ResponseLogin --> ResponseLogin
+deactivate ResponseLogin
+ResponseLogin --> LoginController
+deactivate ResponseLogin
+return
+@enduml

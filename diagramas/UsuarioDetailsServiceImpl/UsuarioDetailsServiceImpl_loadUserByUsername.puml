@@ -1,0 +1,23 @@
+@startuml
+participant Actor
+Actor -> UsuarioDetailsServiceImpl : loadUserByUsername
+activate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl -> UsuarioRepository : findByName
+activate UsuarioRepository
+UsuarioRepository --> UsuarioDetailsServiceImpl
+deactivate UsuarioRepository
+UsuarioDetailsServiceImpl -> UsuarioDetailsServiceImpl : () ->
+activate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl --> UsuarioDetailsServiceImpl
+deactivate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl -> UsuarioDetailsImpl : build
+activate UsuarioDetailsImpl
+create UsuarioDetailsImpl
+UsuarioDetailsImpl -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsServiceImpl
+deactivate UsuarioDetailsImpl
+return
+@enduml

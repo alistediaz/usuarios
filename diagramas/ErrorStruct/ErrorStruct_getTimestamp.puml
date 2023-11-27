@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ErrorStruct : getTimestamp
+activate ErrorStruct
+return
+@enduml

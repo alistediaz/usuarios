@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> Phone : getCityCode
+activate Phone
+return
+@enduml

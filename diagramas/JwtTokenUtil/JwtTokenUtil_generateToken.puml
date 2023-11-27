@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> JwtTokenUtil : generateToken
+activate JwtTokenUtil
+return
+@enduml

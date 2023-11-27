@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ResponseSignUp : setToken
+activate ResponseSignUp
+return
+@enduml

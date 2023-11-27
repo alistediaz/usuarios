@@ -1,0 +1,7 @@
+@startuml
+participant Actor
+create ResponseSignUp
+Actor -> ResponseSignUp : new
+activate ResponseSignUp
+return
+@enduml

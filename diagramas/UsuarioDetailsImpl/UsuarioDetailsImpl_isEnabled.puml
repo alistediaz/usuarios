@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> UsuarioDetailsImpl : isEnabled
+activate UsuarioDetailsImpl
+return
+@enduml

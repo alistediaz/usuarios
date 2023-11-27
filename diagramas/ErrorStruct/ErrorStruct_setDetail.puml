@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ErrorStruct : setDetail
+activate ErrorStruct
+return
+@enduml

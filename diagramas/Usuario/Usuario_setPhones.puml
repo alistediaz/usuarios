@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> Usuario : setPhones
+activate Usuario
+return
+@enduml

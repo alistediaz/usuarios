@@ -1,0 +1,224 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.mario.usuarios.controller.SignUpControllerTest#testSignUp()",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.mario.usuarios.controller.SignUpControllerTest",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_103666436 { 
+   	label=mario
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1532315985 { 
+   	label=usuarios
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1584861729 { 
+   	label=UsuarioDetailsImpl
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   UsuarioDetailsImpl648435075XXXbuild1531808526[
+	label="+ build()"
+	style=filled
+	fillcolor=white
+	tooltip="UsuarioDetailsImpl
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_225358246 { 
+   	label=SignUpControllerTest
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   SignUpControllerTest1128708622XXXtestSignUp0[
+	label="+ testSignUp()"
+	style=filled
+	fillcolor=white
+	tooltip="SignUpControllerTest
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_38362339 { 
+   	label=ValidaEmailPassword
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   ValidaEmailPassword1415248639XXXvalidaEmailPassword1531808526[
+	label="+ validaEmailPassword()"
+	style=filled
+	fillcolor=white
+	tooltip="ValidaEmailPassword
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_487851843 { 
+   	label=JwtTokenUtil
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   JwtTokenUtil1415248639XXXgenerateToken1371243561[
+	label="+ generateToken()"
+	style=filled
+	fillcolor=white
+	tooltip="JwtTokenUtil
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_688811276 { 
+   	label=SignUpController
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   SignUpController1128708622XXXsignUp1531808526[
+	label="+ signUp()"
+	style=filled
+	fillcolor=white
+	tooltip="SignUpController
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_741910791 { 
+   	label=RegExUtils
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   RegExUtils1415248639XXXvalidateEmailFormat1808118735[
+	label="+ validateEmailFormat()"
+	style=filled
+	fillcolor=white
+	tooltip="RegExUtils
+
+null"
+	fontcolor=darkgreen
+];
+
+RegExUtils1415248639XXXvalidatePasswordRules1808118735[
+	label="+ validatePasswordRules()"
+	style=filled
+	fillcolor=white
+	tooltip="RegExUtils
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+SignUpController1128708622XXXsignUp1531808526 -> JwtTokenUtil1415248639XXXgenerateToken1371243561;
+SignUpController1128708622XXXsignUp1531808526 -> UsuarioDetailsImpl648435075XXXbuild1531808526;
+SignUpController1128708622XXXsignUp1531808526 -> ValidaEmailPassword1415248639XXXvalidaEmailPassword1531808526;
+SignUpControllerTest1128708622XXXtestSignUp0 -> JwtTokenUtil1415248639XXXgenerateToken1371243561;
+SignUpControllerTest1128708622XXXtestSignUp0 -> SignUpController1128708622XXXsignUp1531808526;
+ValidaEmailPassword1415248639XXXvalidaEmailPassword1531808526 -> RegExUtils1415248639XXXvalidateEmailFormat1808118735;
+ValidaEmailPassword1415248639XXXvalidaEmailPassword1531808526 -> RegExUtils1415248639XXXvalidatePasswordRules1808118735;
+    
+}
+@enduml

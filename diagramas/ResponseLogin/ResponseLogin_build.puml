@@ -1,0 +1,11 @@
+@startuml
+participant Actor
+Actor -> ResponseLogin : build
+activate ResponseLogin
+create ResponseLogin
+ResponseLogin -> ResponseLogin : new
+activate ResponseLogin
+ResponseLogin --> ResponseLogin
+deactivate ResponseLogin
+return
+@enduml

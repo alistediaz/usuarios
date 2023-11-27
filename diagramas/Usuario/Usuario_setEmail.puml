@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> Usuario : setEmail
+activate Usuario
+return
+@enduml

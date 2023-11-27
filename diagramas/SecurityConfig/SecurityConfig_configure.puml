@@ -1,0 +1,10 @@
+@startuml
+participant Actor
+Actor -> SecurityConfig : configure
+activate SecurityConfig
+SecurityConfig -> SecurityConfig : passwordEncoder
+activate SecurityConfig
+SecurityConfig --> SecurityConfig
+deactivate SecurityConfig
+return
+@enduml

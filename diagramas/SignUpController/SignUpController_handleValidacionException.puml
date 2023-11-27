@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> SignUpController : handleValidacionException
+activate SignUpController
+return
+@enduml

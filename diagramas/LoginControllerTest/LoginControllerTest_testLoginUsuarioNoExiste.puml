@@ -1,0 +1,19 @@
+@startuml
+participant Actor
+Actor -> LoginControllerTest : testLoginUsuarioNoExiste
+activate LoginControllerTest
+create UsuarioDetailsImpl
+LoginControllerTest -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> LoginControllerTest
+deactivate UsuarioDetailsImpl
+LoginControllerTest -> JwtTokenUtil : generateToken
+activate JwtTokenUtil
+JwtTokenUtil --> LoginControllerTest
+deactivate JwtTokenUtil
+LoginControllerTest -> LoginControllerTest : () ->
+activate LoginControllerTest
+LoginControllerTest --> LoginControllerTest
+deactivate LoginControllerTest
+return
+@enduml
