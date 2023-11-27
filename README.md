@@ -3,7 +3,7 @@
 # `Pasos para ejecutar el proyecto:`
 
 ``1. Clonar el repositorio desde GitHub: 
-_gh repo clone alistediaz/usuarios_``
+gh repo clone alistediaz/usuarios``
 
 `2.- Abrir la consola del sistema, por ejemplo: CMD.exe`
 
