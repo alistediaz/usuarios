@@ -8,6 +8,10 @@ public abstract class RegExUtils {
 		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
 		        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 		
+		if (emailAddress == null) {
+			return false;
+		}
+		
 	    return Pattern.compile(regexPattern)
 	    	      .matcher(emailAddress)
 	    	      .matches();
@@ -15,6 +19,10 @@ public abstract class RegExUtils {
 	
 	public static boolean validatePasswordRules(String password) {
 		String regexPattern = "^(?=.*[A-Z])(?!.*[A-Z].*[A-Z])(?=.*\\d.*\\d)(?!.*\\d.*\\d.*\\d)(?!.*[^a-zA-Z0-9]).{8,12}$";
+		
+		if (password == null) {
+			return false;
+		}
 		
 	    return Pattern.compile(regexPattern)
 	    	      .matcher(password)

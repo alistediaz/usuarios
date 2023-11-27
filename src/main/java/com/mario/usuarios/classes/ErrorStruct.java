@@ -2,17 +2,17 @@ package com.mario.usuarios.classes;
 
 import java.time.LocalDateTime;
 
-public class ResponseError {
+public class ErrorStruct {
 
 	LocalDateTime timestamp;
 	int codigo;
 	String detail;
 	
-	public ResponseError() {
+	public ErrorStruct() {
 	}
 
 	
-	public ResponseError(int codigo, String detail) {
+	public ErrorStruct(int codigo, String detail) {
 		this.timestamp = LocalDateTime.now();
 		this.codigo = codigo;
 		this.detail = detail;

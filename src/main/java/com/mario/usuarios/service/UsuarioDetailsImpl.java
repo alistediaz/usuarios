@@ -23,7 +23,7 @@ public class UsuarioDetailsImpl implements UserDetails {
     public static UsuarioDetailsImpl build(Usuario usuario) {
         return new UsuarioDetailsImpl(
                 usuario.getId(),
-                usuario.getUsername(),
+                usuario.getName(),
                 usuario.getPassword()
         );
     }
