@@ -1,6 +1,5 @@
 package com.mario.usuarios.controller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +38,7 @@ public class SignUpController {
     	Optional<Usuario> usuarioExiste =  usuarioRepository.findByName(usuario.getName());
     	
     	if(!usuarioExiste.isEmpty()) {
-    		ErrorStruct error = new ErrorStruct(3, "Usuario ya existe.");
+    		ErrorStruct error = new ErrorStruct(3, "Usuario ya existe: " + usuario.getName());
     		errores.add(error);
     	}
     	
@@ -47,10 +46,9 @@ public class SignUpController {
     		throw new ValidacionException(errores);
     	}
     	
-    	usuario.setCreated(LocalDateTime.now());
+    	usuario.setCreated(new Date());
     	usuario.setLastLogin(new Date());
     	usuario.setActive(true);
-
     	ResponseSignUp responseSignUp = new ResponseSignUp(usuarioRepository.save(usuario));
     	responseSignUp.setToken(jwtTokenUtil.generateToken(UsuarioDetailsImpl.build(usuario)));
     	

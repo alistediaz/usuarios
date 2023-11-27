@@ -1,56 +1,66 @@
 package com.mario.usuarios.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Optional;
 
-import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mario.usuarios.classes.ResponseSignUp;
+import com.mario.usuarios.exceptions.ValidacionException;
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.service.UsuarioService;
+import com.mario.usuarios.repository.UsuarioRepository;
+import com.mario.usuarios.utils.JwtTokenUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class SignUpControllerTest {
-	@Autowired
-    private MockMvc mockMvc;
-
-    @Mock
-    private UsuarioService usuarioService;
 
     @InjectMocks
     private SignUpController signUpController;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Mock
+    private UsuarioRepository usuarioRepository;
 
-    @Before
-    public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(signUpController).build();
+    @Mock
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Test
+    public void testSignUp() throws ValidacionException {
+    	Usuario usuario = new Usuario();
+        usuario.setName("testUser");
+        usuario.setEmail("testUser@test.com");
+        usuario.setPassword("a2asfGfdfdf4");
+         
+        when(usuarioRepository.findByName("testUser")).thenReturn(Optional.empty());
+        when(usuarioRepository.save(usuario)).thenReturn(usuario);
+        when(jwtTokenUtil.generateToken(any())).thenReturn("testToken");
+    
+        ResponseSignUp responseSignUp = signUpController.signUp(usuario);
+        verify(usuarioRepository, times(1)).save(usuario);
+
+        assertEquals("testToken", responseSignUp.getToken());
+
     }
 
     @Test
-    public void testCreateUser() throws Exception {
-        Usuario newUsuario = new Usuario("Juan Perez", "juan.perez@example.com", "securePassword", null);
-        when(usuarioService.createUser(any(Usuario.class))).thenReturn(newUsuario);
+    public void testSignUpWithExistingUser() throws ValidacionException {
+        Usuario usuario = new Usuario();
+        usuario.setName("existingUser");
 
-        mockMvc.perform(post("/sign-up")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(newUsuario)))
-                .andExpect(status().isOk());
+        Optional<Usuario> usuarioExistente = Optional.of(new Usuario());
+        when(usuarioRepository.findByName(usuario.getName())).thenReturn(usuarioExistente);
+
+        Assertions.assertThrows(ValidacionException.class, () -> signUpController.signUp(usuario));
     }
 }

@@ -2,7 +2,6 @@ package com.mario.usuarios.model;
 
 import javax.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Usuario {
     @Column
     private String password;
     @Column
-    private LocalDateTime created;
+    private Date created;
     @Column
     private Date lastLogin;
     @Column
@@ -80,11 +79,11 @@ public class Usuario {
 		this.name = name;
 	}
 
-	public LocalDateTime getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(LocalDateTime created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 

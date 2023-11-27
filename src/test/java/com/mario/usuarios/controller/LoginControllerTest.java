@@ -1,5 +1,10 @@
 package com.mario.usuarios.controller;
 
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -7,9 +12,14 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import com.mario.usuarios.model.Phone;
+import com.mario.usuarios.model.Usuario;
+import com.mario.usuarios.repository.UsuarioRepository;
 import com.mario.usuarios.service.UsuarioDetailsImpl;
-import com.mario.usuarios.service.UsuarioService;
+import com.mario.usuarios.service.UsuarioDetailsServiceImpl;
 import com.mario.usuarios.utils.JwtTokenUtil;
 
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,11 +34,26 @@ class LoginControllerTest {
     JwtTokenUtil jwtTokenUtil;
 
     @Mock
-    private UsuarioService usuarioService;
-
+    UsuarioRepository usuarioRepository;
+    
     @InjectMocks
     private LoginController loginController;
 
+    @Test
+    public void testLoginSuccess() throws Exception {
+    	UserDetails userDetails = new UsuarioDetailsImpl(1L, "testUser", "a2asfGfdfdf4");
+    	String token = jwtTokenUtil.generateToken(userDetails);
+    	
+    	Optional<Usuario> usuario = Optional.of(new Usuario("testUser","test@user.com", "a2asfGfdfdf4",null));
+		when(usuarioRepository.findByName("testUser")).thenReturn(usuario);
+    	
+    	webTestClient
+	        .get().uri("/login")
+	        .headers(http -> http.setBearerAuth(token))
+	        .exchange()
+	        .expectStatus().isOk();
+    }
+    
     @Test
     public void testLoginWithoutToken() throws Exception {
     	webTestClient

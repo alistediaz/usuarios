@@ -11,7 +11,7 @@ public class ValidacionException extends Exception {
 	private List<ErrorStruct> error = new ArrayList<>();
 
 	public ValidacionException(List<ErrorStruct> error){
-		super("ValidacionException");
+		super(error.get(0).getDetail());
 		this.setError(error);
 	}
 
