@@ -37,10 +37,7 @@ public class SignUpControllerTest {
 
     @Test
     public void testSignUp() throws ValidacionException {
-    	Usuario usuario = new Usuario();
-        usuario.setName("testUser");
-        usuario.setEmail("testUser@test.com");
-        usuario.setPassword("a2asfGfdfdf4");
+    	Usuario usuario = new Usuario("testUser","test@user.com", "a2asfGfdfdf4",null);
          
         when(usuarioRepository.findByName("testUser")).thenReturn(Optional.empty());
         when(usuarioRepository.save(usuario)).thenReturn(usuario);

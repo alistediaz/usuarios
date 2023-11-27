@@ -32,9 +32,11 @@ class LoginControllerTest {
     WebTestClient webTestClient;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
+    @Autowired
+	private UsuarioRepository usuarioRepository;
 
     @Mock
-    UsuarioRepository usuarioRepository;
+	UsuarioDetailsServiceImpl usuarioDetailsServiceImpl;
     
     @InjectMocks
     private LoginController loginController;
@@ -44,8 +46,10 @@ class LoginControllerTest {
     	UserDetails userDetails = new UsuarioDetailsImpl(1L, "testUser", "a2asfGfdfdf4");
     	String token = jwtTokenUtil.generateToken(userDetails);
     	
-    	Optional<Usuario> usuario = Optional.of(new Usuario("testUser","test@user.com", "a2asfGfdfdf4",null));
-		when(usuarioRepository.findByName("testUser")).thenReturn(usuario);
+    	Usuario usuario = new Usuario("testUser","test@user.com", "a2asfGfdfdf4",null);
+    	usuarioRepository.save(usuario);
+
+		when(usuarioDetailsServiceImpl.loadUserByUsername("testUser")).thenReturn(userDetails);
     	
     	webTestClient
 	        .get().uri("/login")
