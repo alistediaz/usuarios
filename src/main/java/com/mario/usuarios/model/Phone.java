@@ -8,9 +8,11 @@ public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private long number;
+    @Column
     private int cityCode;
+    @Column
     private String countryCode;
 
     public Phone() {

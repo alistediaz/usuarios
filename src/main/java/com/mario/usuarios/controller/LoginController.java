@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/login")
 public class LoginController {
-	
+
 	@GetMapping
     public Map<String, Object> login() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

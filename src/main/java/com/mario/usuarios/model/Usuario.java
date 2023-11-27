@@ -1,6 +1,9 @@
 package com.mario.usuarios.model;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -9,12 +12,20 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String username;
+    @Column
+    private String name;
+    @Column
     private String email;
+    @Column
     private String password;
+    @Column
+    private LocalDateTime created;
+    @Column
+    private Date lastLogin;
+    @Column
+    private boolean isActive;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "usuario_id")
     private List<Phone> phones;
 
@@ -23,7 +34,7 @@ public class Usuario {
     }
 
     public Usuario(String name, String email, String password, List<Phone> phones) {
-        this.username = name;
+        this.name = name;
         this.email = email;
         this.password = password;
         this.phones = phones;
@@ -35,14 +46,6 @@ public class Usuario {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getEmail() {
@@ -69,6 +72,36 @@ public class Usuario {
 		this.phones = phones;
 	}
 
-   
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public LocalDateTime getCreated() {
+		return created;
+	}
+
+	public void setCreated(LocalDateTime created) {
+		this.created = created;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 }
 

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.mario.usuarios.classes.ResponseError;
+import com.mario.usuarios.classes.ErrorStruct;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
