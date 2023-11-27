@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ResponseLogin : setId
+activate ResponseLogin
+return
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> Usuario : getId
+activate Usuario
+return
+@enduml

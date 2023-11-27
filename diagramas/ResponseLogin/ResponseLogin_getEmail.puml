@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ResponseLogin : getEmail
+activate ResponseLogin
+return
+@enduml

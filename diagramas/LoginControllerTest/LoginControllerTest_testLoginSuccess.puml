@@ -1,0 +1,45 @@
+@startuml
+participant Actor
+Actor -> LoginControllerTest : testLoginSuccess
+activate LoginControllerTest
+create UsuarioDetailsImpl
+LoginControllerTest -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> LoginControllerTest
+deactivate UsuarioDetailsImpl
+LoginControllerTest -> JwtTokenUtil : generateToken
+activate JwtTokenUtil
+JwtTokenUtil --> LoginControllerTest
+deactivate JwtTokenUtil
+create Usuario
+LoginControllerTest -> Usuario : new
+activate Usuario
+Usuario --> LoginControllerTest
+deactivate Usuario
+LoginControllerTest -> UsuarioDetailsServiceImpl : loadUserByUsername
+activate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl -> UsuarioRepository : findByName
+activate UsuarioRepository
+UsuarioRepository --> UsuarioDetailsServiceImpl
+deactivate UsuarioRepository
+UsuarioDetailsServiceImpl -> UsuarioDetailsServiceImpl : () ->
+activate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl --> UsuarioDetailsServiceImpl
+deactivate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl -> UsuarioDetailsImpl : build
+activate UsuarioDetailsImpl
+create UsuarioDetailsImpl
+UsuarioDetailsImpl -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsServiceImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsServiceImpl --> LoginControllerTest
+deactivate UsuarioDetailsServiceImpl
+LoginControllerTest -> LoginControllerTest : () ->
+activate LoginControllerTest
+LoginControllerTest --> LoginControllerTest
+deactivate LoginControllerTest
+return
+@enduml

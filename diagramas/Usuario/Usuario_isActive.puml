@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> Usuario : isActive
+activate Usuario
+return
+@enduml

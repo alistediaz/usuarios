@@ -1,0 +1,10 @@
+@startuml
+participant Actor
+Actor -> LoginControllerTest : testLoginWithInvalidToken
+activate LoginControllerTest
+LoginControllerTest -> LoginControllerTest : () ->
+activate LoginControllerTest
+LoginControllerTest --> LoginControllerTest
+deactivate LoginControllerTest
+return
+@enduml

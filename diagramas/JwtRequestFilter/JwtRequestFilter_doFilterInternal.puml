@@ -1,0 +1,43 @@
+@startuml
+participant Actor
+Actor -> JwtRequestFilter : doFilterInternal
+activate JwtRequestFilter
+JwtRequestFilter -> JwtTokenUtil : getUsernameFromToken
+activate JwtTokenUtil
+JwtTokenUtil -> JwtTokenUtil : getClaimFromToken
+activate JwtTokenUtil
+JwtTokenUtil -> JwtTokenUtil : getAllClaimsFromToken
+activate JwtTokenUtil
+JwtTokenUtil --> JwtTokenUtil
+deactivate JwtTokenUtil
+JwtTokenUtil --> JwtTokenUtil
+deactivate JwtTokenUtil
+JwtTokenUtil --> JwtRequestFilter
+deactivate JwtTokenUtil
+JwtRequestFilter -> UsuarioDetailsServiceImpl : loadUserByUsername
+activate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl -> UsuarioRepository : findByName
+activate UsuarioRepository
+UsuarioRepository --> UsuarioDetailsServiceImpl
+deactivate UsuarioRepository
+UsuarioDetailsServiceImpl -> UsuarioDetailsServiceImpl : () ->
+activate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl --> UsuarioDetailsServiceImpl
+deactivate UsuarioDetailsServiceImpl
+UsuarioDetailsServiceImpl -> UsuarioDetailsImpl : build
+activate UsuarioDetailsImpl
+create UsuarioDetailsImpl
+UsuarioDetailsImpl -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsServiceImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsServiceImpl --> JwtRequestFilter
+deactivate UsuarioDetailsServiceImpl
+JwtRequestFilter -> JwtTokenUtil : validate
+activate JwtTokenUtil
+JwtTokenUtil --> JwtRequestFilter
+deactivate JwtTokenUtil
+return
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+participant Actor
+Actor -> JwtTokenUtil : getClaimFromToken
+activate JwtTokenUtil
+JwtTokenUtil -> JwtTokenUtil : getAllClaimsFromToken
+activate JwtTokenUtil
+JwtTokenUtil --> JwtTokenUtil
+deactivate JwtTokenUtil
+return
+@enduml

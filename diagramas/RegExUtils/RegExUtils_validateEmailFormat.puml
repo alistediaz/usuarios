@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> RegExUtils : validateEmailFormat
+activate RegExUtils
+return
+@enduml

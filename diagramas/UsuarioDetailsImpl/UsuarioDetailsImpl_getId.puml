@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> UsuarioDetailsImpl : getId
+activate UsuarioDetailsImpl
+return
+@enduml

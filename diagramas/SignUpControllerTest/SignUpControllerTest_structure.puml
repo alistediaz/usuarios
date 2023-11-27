@@ -1,0 +1,205 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.mario.usuarios.controller.SignUpControllerTest",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_103666436 { 
+   	label=mario
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1532315985 { 
+   	label=usuarios
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   JwtTokenUtil1415248639[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)JwtTokenUtil</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   key: Key [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ generateToken(userDetails: UserDetails): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- getAllClaimsFromToken(token: String): Claims</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getClaimFromToken(token: String, claimsResolver: Function&lt;Claims, T&gt;): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getExpirationDateFromToken(token: String): Date</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getUsernameFromToken(token: String): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isTokenExpired(token: String): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ validate(token: String): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RegExUtils1415248639[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)RegExUtils</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ validateEmailFormat(emailAddress: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ validatePasswordRules(password: String): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SignUpController1128708622[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SignUpController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   jwtTokenUtil: JwtTokenUtil [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   usuarioRepository: UsuarioRepository [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ handleValidacionException(request: HttpServletRequest, ex: Exception): Error</TD></TR>
+<TR><TD ALIGN="LEFT" >+ signUp(usuario: Usuario): ResponseSignUp</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SignUpControllerTest1128708622[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SignUpControllerTest</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   jwtTokenUtil: JwtTokenUtil [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   signUpController: SignUpController [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   usuarioRepository: UsuarioRepository [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ testSignUp()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ testSignUpWithExistingUser()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UsuarioDetailsImpl648435075[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UsuarioDetailsImpl</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: Long [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ build(usuario: Usuario): UsuarioDetailsImpl</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ValidaEmailPassword1415248639[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ValidaEmailPassword</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ validaEmailPassword(usuario: Usuario): List&lt;ErrorStruct&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+SignUpController1128708622 -> JwtTokenUtil1415248639[label="jwtTokenUtil
+[1]"];
+SignUpController1128708622 -> UsuarioDetailsImpl648435075[label="signUp() -> build()"];
+SignUpController1128708622 -> ValidaEmailPassword1415248639[label="signUp() -> validaEmailPassword()"];
+SignUpControllerTest1128708622 -> JwtTokenUtil1415248639[label="jwtTokenUtil
+[0..1]"];
+SignUpControllerTest1128708622 -> SignUpController1128708622[label="signUpController
+[0..1]"];
+    
+}
+@enduml

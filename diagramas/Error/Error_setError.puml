@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> Error : setError
+activate Error
+return
+@enduml

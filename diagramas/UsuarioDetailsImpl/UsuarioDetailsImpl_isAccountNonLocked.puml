@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> UsuarioDetailsImpl : isAccountNonLocked
+activate UsuarioDetailsImpl
+return
+@enduml

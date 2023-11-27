@@ -1,0 +1,7 @@
+@startuml
+participant Actor
+create SecurityConfig
+Actor -> SecurityConfig : new
+activate SecurityConfig
+return
+@enduml

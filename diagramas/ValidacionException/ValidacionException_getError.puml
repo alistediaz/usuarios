@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ValidacionException : getError
+activate ValidacionException
+return
+@enduml

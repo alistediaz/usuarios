@@ -1,0 +1,7 @@
+@startuml
+participant Actor
+create Phone
+Actor -> Phone : new
+activate Phone
+return
+@enduml

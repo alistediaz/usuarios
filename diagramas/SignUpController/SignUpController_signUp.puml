@@ -1,0 +1,60 @@
+@startuml
+participant Actor
+Actor -> SignUpController : signUp
+activate SignUpController
+SignUpController -> ValidaEmailPassword : validaEmailPassword
+activate ValidaEmailPassword
+ValidaEmailPassword -> RegExUtils : validateEmailFormat
+activate RegExUtils
+RegExUtils --> ValidaEmailPassword
+deactivate RegExUtils
+create ErrorStruct
+ValidaEmailPassword -> ErrorStruct : new
+activate ErrorStruct
+ErrorStruct --> ValidaEmailPassword
+deactivate ErrorStruct
+ValidaEmailPassword -> RegExUtils : validatePasswordRules
+activate RegExUtils
+RegExUtils --> ValidaEmailPassword
+deactivate RegExUtils
+create ErrorStruct
+ValidaEmailPassword -> ErrorStruct : new
+activate ErrorStruct
+ErrorStruct --> ValidaEmailPassword
+deactivate ErrorStruct
+ValidaEmailPassword --> SignUpController
+deactivate ValidaEmailPassword
+SignUpController -> UsuarioRepository : findByName
+activate UsuarioRepository
+UsuarioRepository --> SignUpController
+deactivate UsuarioRepository
+create ErrorStruct
+SignUpController -> ErrorStruct : new
+activate ErrorStruct
+ErrorStruct --> SignUpController
+deactivate ErrorStruct
+create ValidacionException
+SignUpController -> ValidacionException : new
+activate ValidacionException
+ValidacionException --> SignUpController
+deactivate ValidacionException
+create ResponseSignUp
+SignUpController -> ResponseSignUp : new
+activate ResponseSignUp
+ResponseSignUp --> SignUpController
+deactivate ResponseSignUp
+SignUpController -> UsuarioDetailsImpl : build
+activate UsuarioDetailsImpl
+create UsuarioDetailsImpl
+UsuarioDetailsImpl -> UsuarioDetailsImpl : new
+activate UsuarioDetailsImpl
+UsuarioDetailsImpl --> UsuarioDetailsImpl
+deactivate UsuarioDetailsImpl
+UsuarioDetailsImpl --> SignUpController
+deactivate UsuarioDetailsImpl
+SignUpController -> JwtTokenUtil : generateToken
+activate JwtTokenUtil
+JwtTokenUtil --> SignUpController
+deactivate JwtTokenUtil
+return
+@enduml

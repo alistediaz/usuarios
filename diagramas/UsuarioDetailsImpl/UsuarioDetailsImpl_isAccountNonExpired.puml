@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> UsuarioDetailsImpl : isAccountNonExpired
+activate UsuarioDetailsImpl
+return
+@enduml

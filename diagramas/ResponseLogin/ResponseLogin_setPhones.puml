@@ -1,0 +1,6 @@
+@startuml
+participant Actor
+Actor -> ResponseLogin : setPhones
+activate ResponseLogin
+return
+@enduml
