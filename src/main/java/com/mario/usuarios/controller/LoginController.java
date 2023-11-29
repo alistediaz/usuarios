@@ -39,7 +39,7 @@ public class LoginController {
     	List<ErrorStruct> errores = new ArrayList<>();
 
         
-        if (usuario.isEmpty()) {
+        if (!usuario.isPresent()) {
     		ErrorStruct error = new ErrorStruct(4, "Usuario no existe.");
     		errores.add(error);
     		throw new ValidacionException(errores);

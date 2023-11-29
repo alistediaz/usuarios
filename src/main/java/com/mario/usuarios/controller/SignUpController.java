@@ -37,7 +37,7 @@ public class SignUpController {
     	List<ErrorStruct> errores = new ArrayList<>(ValidaEmailPassword.validaEmailPassword(usuario));
     	Optional<Usuario> usuarioExiste =  usuarioRepository.findByName(usuario.getName());
     	
-    	if(!usuarioExiste.isEmpty()) {
+    	if(usuarioExiste.isPresent()) {
     		ErrorStruct error = new ErrorStruct(3, "Usuario ya existe: " + usuario.getName());
     		errores.add(error);
     	}

@@ -2,9 +2,6 @@ package com.mario.usuarios.controller;
 
 import static org.mockito.Mockito.when;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import com.mario.usuarios.model.Phone;
 import com.mario.usuarios.model.Usuario;
 import com.mario.usuarios.repository.UsuarioRepository;
 import com.mario.usuarios.service.UsuarioDetailsImpl;
