@@ -19,7 +19,7 @@ import com.mario.usuarios.classes.ErrorStruct;
 import com.mario.usuarios.classes.ResponseSignUp;
 import com.mario.usuarios.exceptions.ValidacionException;
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.repository.UsuarioRepository;
+import com.mario.usuarios.repository.UsuarioService;
 import com.mario.usuarios.service.UsuarioDetailsImpl;
 import com.mario.usuarios.utils.JwtTokenUtil;
 import com.mario.usuarios.utils.ValidaEmailPassword;
@@ -28,14 +28,14 @@ import com.mario.usuarios.utils.ValidaEmailPassword;
 public class SignUpController {
 
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	UsuarioService usuarioService;
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
 	
     @PostMapping("/sign-up")
     public ResponseSignUp signUp(@RequestBody Usuario usuario) throws ValidacionException {
     	List<ErrorStruct> errores = new ArrayList<>(ValidaEmailPassword.validaEmailPassword(usuario));
-    	Optional<Usuario> usuarioExiste =  usuarioRepository.findByName(usuario.getName());
+    	Optional<Usuario> usuarioExiste =  usuarioService.findByName(usuario.getName());
     	
     	if(usuarioExiste.isPresent()) {
     		ErrorStruct error = new ErrorStruct(3, "Usuario ya existe: " + usuario.getName());
@@ -49,7 +49,7 @@ public class SignUpController {
     	usuario.setCreated(new Date());
     	usuario.setLastLogin(new Date());
     	usuario.setActive(true);
-    	ResponseSignUp responseSignUp = new ResponseSignUp(usuarioRepository.save(usuario));
+    	ResponseSignUp responseSignUp = new ResponseSignUp(usuarioService.save(usuario));
     	responseSignUp.setToken(jwtTokenUtil.generateToken(UsuarioDetailsImpl.build(usuario)));
     	
 		return responseSignUp;

@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.mario.usuarios.classes.ResponseSignUp;
 import com.mario.usuarios.exceptions.ValidacionException;
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.repository.UsuarioRepository;
+import com.mario.usuarios.repository.UsuarioService;
 import com.mario.usuarios.utils.JwtTokenUtil;
 
 @RunWith(SpringRunner.class)
@@ -30,7 +30,7 @@ public class SignUpControllerTest {
     private SignUpController signUpController;
 
     @Mock
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @Mock
     private JwtTokenUtil jwtTokenUtil;
@@ -39,12 +39,12 @@ public class SignUpControllerTest {
     public void testSignUp() throws ValidacionException {
     	Usuario usuario = new Usuario("testUser","test@user.com", "a2asfGfdfdf4",null);
          
-        when(usuarioRepository.findByName("testUser")).thenReturn(Optional.empty());
-        when(usuarioRepository.save(usuario)).thenReturn(usuario);
+        when(usuarioService.findByName("testUser")).thenReturn(Optional.empty());
+        when(usuarioService.save(usuario)).thenReturn(usuario);
         when(jwtTokenUtil.generateToken(any())).thenReturn("testToken");
     
         ResponseSignUp responseSignUp = signUpController.signUp(usuario);
-        verify(usuarioRepository, times(1)).save(usuario);
+        verify(usuarioService, times(1)).save(usuario);
 
         assertEquals("testToken", responseSignUp.getToken());
 
@@ -56,7 +56,7 @@ public class SignUpControllerTest {
         usuario.setName("existingUser");
 
         Optional<Usuario> usuarioExistente = Optional.of(new Usuario());
-        when(usuarioRepository.findByName(usuario.getName())).thenReturn(usuarioExistente);
+        when(usuarioService.findByName(usuario.getName())).thenReturn(usuarioExistente);
 
         Assertions.assertThrows(ValidacionException.class, () -> signUpController.signUp(usuario));
     }

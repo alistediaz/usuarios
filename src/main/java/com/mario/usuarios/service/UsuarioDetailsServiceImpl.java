@@ -7,15 +7,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.repository.UsuarioRepository;
+import com.mario.usuarios.repository.UsuarioService;
 
 @Service
 public class UsuarioDetailsServiceImpl implements UserDetailsService {
 	
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioRepository;
 
     @Autowired
-    public UsuarioDetailsServiceImpl(UsuarioRepository usuarioRepository) {
+    public UsuarioDetailsServiceImpl(UsuarioService usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 

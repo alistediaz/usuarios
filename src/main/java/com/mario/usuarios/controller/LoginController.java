@@ -20,7 +20,7 @@ import com.mario.usuarios.classes.ErrorStruct;
 import com.mario.usuarios.classes.ResponseLogin;
 import com.mario.usuarios.exceptions.ValidacionException;
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.repository.UsuarioRepository;
+import com.mario.usuarios.repository.UsuarioService;
 import com.mario.usuarios.service.UsuarioDetailsImpl;
 import com.mario.usuarios.utils.JwtTokenUtil;
 
@@ -28,14 +28,14 @@ import com.mario.usuarios.utils.JwtTokenUtil;
 @RequestMapping(value = "/login")
 public class LoginController {
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	UsuarioService usuarioService;
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
 	
 	@GetMapping
     public ResponseLogin login() throws ValidacionException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Usuario> usuario = usuarioRepository.findByName( authentication.getName());
+        Optional<Usuario> usuario = usuarioService.findByName( authentication.getName());
     	List<ErrorStruct> errores = new ArrayList<>();
 
         
