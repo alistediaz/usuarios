@@ -1,13 +1,11 @@
 package com.mario.usuarios.classes;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.mario.usuarios.model.Phone;
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.service.UsuarioDetailsImpl;
 
 public class ResponseLogin {
 	

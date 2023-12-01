@@ -1,17 +1,15 @@
 package com.mario.usuarios.service;
 
-import com.mario.usuarios.model.Usuario;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Optional;
 
-@Service
-public class UsuarioService {
-    @Autowired
-    private com.mario.usuarios.repository.UsuarioService usuarioRepository;
+import com.mario.usuarios.classes.ResponseLogin;
+import com.mario.usuarios.classes.ResponseSignUp;
+import com.mario.usuarios.exceptions.ValidacionException;
+import com.mario.usuarios.model.Usuario;
 
-    public Optional<Usuario> findByName(String username) {
-        return  usuarioRepository.findByName(username);
-    }
+public interface UsuarioService {
+	Optional<Usuario> findByName(String username);
+	ResponseLogin usuarioLogin() throws ValidacionException;
+	ResponseSignUp usuarioSignUp(Usuario usuario) throws ValidacionException;
+	Usuario save(Usuario usuario);
 }

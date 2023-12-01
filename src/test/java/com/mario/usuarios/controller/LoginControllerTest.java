@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.mario.usuarios.model.Usuario;
-import com.mario.usuarios.repository.UsuarioService;
+import com.mario.usuarios.repository.UsuarioRepository;
 import com.mario.usuarios.service.UsuarioDetailsImpl;
 import com.mario.usuarios.service.UsuarioDetailsServiceImpl;
 import com.mario.usuarios.utils.JwtTokenUtil;
@@ -29,7 +29,7 @@ class LoginControllerTest {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
     @Autowired
-	private UsuarioService usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 
     @Mock
 	UsuarioDetailsServiceImpl usuarioDetailsServiceImpl;
