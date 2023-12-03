@@ -11,6 +11,6 @@
 ![SignUpController handleValidacionHandler Diagrama de Secuencia](https://github.com/alistediaz/usuarios/assets/26742492/2f4b7e3d-a8fb-48a8-af08-8f5cf4446596)
 
 
-### Logincontroller ###
+### LoginController ###
 ![LoginController Diagrama de Secuencia](https://github.com/alistediaz/usuarios/assets/26742492/3e95daa1-35d0-4075-b00c-5d274d05719f)
 ![LoginController handleValidacionHandler Diagrama de Secuencia](https://github.com/alistediaz/usuarios/assets/26742492/e2b5b8b5-57bf-47a4-a6e9-92158ebd9ee8)
