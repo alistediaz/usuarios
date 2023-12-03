@@ -8,9 +8,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
+import com.mario.usuarios.model.Phone;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -106,5 +109,27 @@ public class UsuarioServiceImplTest {
         verify(jwtTokenUtil, times(1)).generateToken(any(UsuarioDetailsImpl.class));
 
         assertNotNull(responseSignUp);
+    }
+
+    @Test
+    public void testUsuarioSignUpWithPhones() throws ValidacionException {
+        List<Phone> phones = new ArrayList<Phone>();
+        phones.add(new Phone(87650009,7, "25"));
+        phones.add(new Phone(87650019,6, "24"));
+        Usuario usuario = new Usuario("testUser", "test@user.com", "a2asfGfdfdf4", phones);
+
+        when(usuarioRepository.findByName(any(String.class))).thenReturn(Optional.empty());
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+
+        when(jwtTokenUtil.generateToken(any(UsuarioDetailsImpl.class))).thenReturn("testToken");
+
+        ResponseSignUp responseSignUp = usuarioService.usuarioSignUp(usuario);
+
+        verify(usuarioRepository, times(1)).findByName(any(String.class));
+        verify(usuarioRepository, times(1)).save(usuario);
+        verify(jwtTokenUtil, times(1)).generateToken(any(UsuarioDetailsImpl.class));
+
+        assertNotNull(responseSignUp);
+
     }
 }
